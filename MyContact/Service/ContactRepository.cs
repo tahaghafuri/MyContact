@@ -10,7 +10,7 @@ namespace MyContact
 {
     class ContactRepository : IContactRepository
     {
-        private string connection = "Data Source=.;Initial Catalog=MyContact;Integrated Security=true";
+        private string connection = "Data Source=PC\\SQLEXPRESS;Initial Catalog=MyContact;Integrated Security=SSPI";
         public bool Delete(int id)
         {
             throw new NotImplementedException();
