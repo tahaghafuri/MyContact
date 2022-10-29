@@ -39,6 +39,10 @@ namespace MyContact
         {
             frmBox frm = new frmBox();
             frm.ShowDialog();
+            if (frm.DialogResult == DialogResult.OK)
+            {
+                BindGrid();
+            }
         }
     }
 }

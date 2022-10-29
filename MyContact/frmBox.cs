@@ -37,11 +37,12 @@ namespace MyContact
                 bool isSuccess = repository.Insert(name.Text, details.Text);
 
                 if (isSuccess == true) {
-
+                    MessageBox.Show("عملیات انجام شد.", "موفق", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DialogResult = DialogResult.OK;
                 }
                 else
                 {
-                    MessageBox.Show("");
+                    MessageBox.Show("عملیات شکست خورد.","خطا",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 }
             }
         }

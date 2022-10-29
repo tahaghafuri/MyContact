@@ -18,14 +18,25 @@ namespace MyContact
 
         public bool Insert(string name, string details)
         {
-            throw new NotImplementedException();
+            try
+            {
+                SqlConnection conn = new SqlConnection(connection);
+                string query = "Insert Into MyContact (Name,Details) Values (@name,@details)";
+                SqlCommand cmd = new SqlCommand(query,conn);
+                cmd.Parameters.AddWithValue("@name", name);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public DataTable SelectAll()
         {
             string query = "Select * From MyContact";
             SqlConnection conn = new SqlConnection(connection);
-            SqlDataAdapter adapter = new SqlDataAdapter(query,conn);
+            SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
             DataTable data = new DataTable();
             adapter.Fill(data);
             return data;
