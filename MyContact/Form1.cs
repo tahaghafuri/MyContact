@@ -44,5 +44,46 @@ namespace MyContact
                 BindGrid();
             }
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (dgContact.CurrentRow != null)
+            {
+                string name = dgContact.CurrentRow.Cells[1].Value.ToString();
+                if (MessageBox.Show($"آیا از حذف {name} مطمئنید؟", "توجه", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    int id = int.Parse(dgContact.CurrentRow.Cells[0].Value.ToString());
+                    repository.Delete(id);
+                    BindGrid();
+                }
+            }
+            else
+            {
+                MessageBox.Show("انتخاب نکردید.");
+            }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            if (dgContact.CurrentRow != null)
+            {
+                int id = int.Parse(dgContact.CurrentRow.Cells[0].Value.ToString());
+                frmBox frm = new frmBox();
+                frm.id = id;
+                if (frm.ShowDialog() == DialogResult.Yes)
+                {
+                    BindGrid();
+                }
+            }
+            else
+            {
+                MessageBox.Show("انتخاب نکردید.");
+            }
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            dgContact.DataSource = repository.Search(txtSearch.Text);
+        }
     }
 }

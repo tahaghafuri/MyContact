@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Data;
 
 namespace MyContact
 {
     public partial class frmBox : Form
     {
         IContactRepository repository;
+        public int id = 00;
         public frmBox()
         {
             InitializeComponent();
@@ -14,7 +16,17 @@ namespace MyContact
 
         private void frmBox_Load(object sender, EventArgs e)
         {
-            this.Text = "افزودن";
+            if (id == 00)
+            {
+                this.Text = "افزودن";
+            }
+            else
+            {
+                this.Text = "ویرایش";
+                DataTable dt = repository.SelectRow(id);
+                name.Text = dt.Rows[0][1].ToString();
+                details.Text = dt.Rows[0][2].ToString();
+            }
         }
 
         bool ValidateInputs()
@@ -34,15 +46,25 @@ namespace MyContact
         {
             if (ValidateInputs())
             {
-                bool isSuccess = repository.Insert(name.Text, details.Text);
+                bool isSuccess;
 
-                if (isSuccess == true) {
+                if (id == 00)
+                {
+                    isSuccess = repository.Insert(name.Text, details.Text);
+                }
+                else
+                {
+                    isSuccess = repository.Update(id,name.Text, details.Text);
+                }
+
+                if (isSuccess == true)
+                {
                     MessageBox.Show("عملیات انجام شد.", "موفق", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     DialogResult = DialogResult.OK;
                 }
                 else
                 {
-                    MessageBox.Show("عملیات شکست خورد.","خطا",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    MessageBox.Show("عملیات شکست خورد.", "خطا", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
