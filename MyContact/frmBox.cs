@@ -14,7 +14,7 @@ namespace MyContact
 
         private void frmBox_Load(object sender, EventArgs e)
         {
-
+            this.Text = "افزودن";
         }
 
         bool ValidateInputs()

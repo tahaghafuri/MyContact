@@ -18,17 +18,25 @@ namespace MyContact
 
         public bool Insert(string name, string details)
         {
+            SqlConnection conn = new SqlConnection(connection);
             try
             {
-                SqlConnection conn = new SqlConnection(connection);
                 string query = "Insert Into MyContact (Name,Details) Values (@name,@details)";
-                SqlCommand cmd = new SqlCommand(query,conn);
+                SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@name", name);
+                cmd.Parameters.AddWithValue("@details", details);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
                 return true;
             }
             catch
             {
                 return false;
+            }
+            finally
+            {
+                conn.Close();
             }
         }
 
